@@ -1,0 +1,10 @@
+# ATIX2.3_Performance-Efficiency-Python-GIL-Rust
+
+## Versies
+
+| Tool | Versie |
+|------|--------|
+| Python (met GIL) | 3.13.12 |
+| Python (zonder GIL) | 3.13.12t |
+| Rust | 1.94.0 |
+| Cargo | 1.94.0 |
