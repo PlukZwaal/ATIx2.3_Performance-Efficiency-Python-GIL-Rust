@@ -8,3 +8,5 @@
 | Python (zonder GIL) | 3.13.12t |
 | Rust | 1.94.0 |
 | Cargo | 1.94.0 |
+
+Dataset: https://www.kaggle.com/datasets/tariqsays/sentiment-dataset-with-1-million-tweets
