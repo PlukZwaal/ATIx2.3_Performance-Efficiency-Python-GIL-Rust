@@ -22,13 +22,23 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     };
 
+    // Determine column index by name so it matches Python's row['Text'] behaviour
+    let headers = rdr.headers()?.clone();
+    let text_idx = headers
+        .iter()
+        .position(|h| h == "Text")
+        .unwrap_or_else(|| {
+            eprintln!("Warning: 'Text' column not found, falling back to index 0");
+            0
+        });
+
     let records: Vec<_> = rdr.records().collect::<Result<Vec<_>, _>>()?;
     let total_rows = records.len();
 
     let total_complexity: i64 = records
         .par_iter()
         .map(|record| {
-            if let Some(text) = record.get(0) {
+            if let Some(text) = record.get(text_idx) {
                 calculate_complexity(text)
             } else {
                 0

@@ -12,8 +12,6 @@ fn calculate_complexity(text: &str) -> i64 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let filename = "research1/dataset.csv";
-    let mut total_rows = 0;
-    let mut total_complexity: i64 = 0;
 
     let mut rdr = match Reader::from_path(filename) {
         Ok(r) => r,
@@ -23,10 +21,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     };
 
-    for result in rdr.records() {
-        let record = result?;
-        if let Some(text) = record.get(0) {
-            total_rows += 1;
+    let headers = rdr.headers()?.clone();
+    let text_idx = headers
+        .iter()
+        .position(|h| h == "Text")
+        .unwrap_or_else(|| {
+            eprintln!("Warning: 'Text' column not found, falling back to index 0");
+            0
+        });
+
+    let records: Vec<_> = rdr.records().collect::<Result<Vec<_>, _>>()?;
+    let total_rows = records.len();
+    let mut total_complexity: i64 = 0;
+
+    for record in &records {
+        if let Some(text) = record.get(text_idx) {
             total_complexity += calculate_complexity(text);
         }
     }
