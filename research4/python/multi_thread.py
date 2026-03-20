@@ -6,10 +6,11 @@ SAMPLES = 50_000_000
 
 
 def count_inside(samples: int) -> int:
+    rng = random.Random()  # eigen instantie per thread — voorkomt lock contention op de globale RNG
     inside = 0
     for _ in range(samples):
-        x = random.random()
-        y = random.random()
+        x = rng.random()
+        y = rng.random()
         if x * x + y * y <= 1.0:
             inside += 1
     return inside
