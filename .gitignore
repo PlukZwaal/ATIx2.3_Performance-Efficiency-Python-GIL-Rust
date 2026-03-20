@@ -1,7 +1,13 @@
 research1/dataset.csv
+research1/rust/target/
 
 research2/images
 research2/output
+research2/rust/target/
+
+research3/rust/target/
+
+research4/rust/target/
 
 
 
