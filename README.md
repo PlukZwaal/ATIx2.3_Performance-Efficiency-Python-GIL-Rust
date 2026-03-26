@@ -117,6 +117,7 @@ research2/rust/target/release/single_thread.exe
 research2/rust/target/release/multi_thread.exe
 research3/rust/target/release/single_thread.exe
 research3/rust/target/release/multi_thread.exe
+research3/rust/target/release/scale_thread.exe
 research4/rust/target/release/single_thread.exe
 research4/rust/target/release/multi_thread.exe
 ```
@@ -242,6 +243,18 @@ hyperfine --warmup 2 ".\research3\rust\target\release\single_thread.exe"
 hyperfine --warmup 2 "python research3/python/multi_thread.py"
 hyperfine --warmup 2 "python3.13t -X gil=0 research3/python/multi_thread.py"
 hyperfine --warmup 2 ".\research3\rust\target\release\multi_thread.exe"
+```
+
+#### Research 3 — Schaalbaarheidstest (1 t/m 6 threads)
+
+Voor de schaalbaarheidstest pas je `NUM_THREADS` bovenaan in beide bestanden aan en run je onderstaande commando's voor elke waarde (1, 2, 3, 4, 5 en 6). Bouw na elke aanpassing van het Rust-bestand opnieuw met `cargo build --release`.
+
+```bash
+# Python NO-GIL schaalbaarheid
+hyperfine --warmup 2 "python3.13t -X gil=0 research3/python/scale_thread.py"
+
+# Rust schaalbaarheid
+hyperfine --warmup 2 ".\research3\rust\target\release\scale_thread.exe"
 ```
 
 ### Research 4 — Monte Carlo Pi
